@@ -1,38 +1,622 @@
-.App {
-  text-align: center;
+/* Reset y estilos globales */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,
+body,
+#root {
+  height: 100%;
+  font-family: "Circular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Layout principal */
+.app {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);
+  color: white;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #000000;
+  padding: 24px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  margin-bottom: 32px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1db954;
+  margin: 0;
+}
+
+.nav-section h3 {
+  color: #b3b3b3;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  text-align: left;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: #1a1a1a;
+  color: white;
+}
+
+.nav-item.active {
+  background: #1db954;
+  color: white;
+}
+
+.playlist-cover {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.user-section {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid #393939;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-header {
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #282828;
+  border-radius: 25px;
+  padding: 4px 16px;
+  transition: all 0.2s ease;
+}
+
+.search-input-container:hover {
+  background: #2a2a2a;
+}
+
+.search-bar.focused .search-input-container {
+  background: #3a3a3a;
+  border: 2px solid #1db954;
+}
+
+.search-icon {
+  color: #b3b3b3;
+  margin-right: 12px;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.search-input::placeholder {
+  color: #b3b3b3;
+}
+
+.clear-button,
+.filter-button {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.clear-button:hover,
+.filter-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Vista de playlist */
+.playlist-view {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.playlist-header {
+  display: flex;
+  align-items: end;
+  margin-bottom: 32px;
+  gap: 24px;
+}
+
+.playlist-cover-large {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.playlist-info h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  background: linear-gradient(135deg, #ffffff, #b3b3b3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.playlist-info p {
+  color: #b3b3b3;
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* Lista de tracks */
+.track-list {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.track-list-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 200px 80px 120px;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  color: #b3b3b3;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.track-item {
+  display: grid;
+  grid-template-columns: 40px 1fr 200px 80px 120px;
+  gap: 16px;
+  padding: 8px 24px;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.track-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.track-item.playing {
+  background: rgba(29, 185, 84, 0.1);
+}
+
+.track-number-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.track-number {
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.play-track-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-item:hover .play-track-button {
+  opacity: 1;
+}
+
+.track-item:hover .track-number {
+  opacity: 0;
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.track-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.track-details {
+  min-width: 0;
+}
+
+.track-title {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  color: #b3b3b3;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-album,
+.track-duration {
+  color: #b3b3b3;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.like-button,
+.more-button {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.like-button:hover,
+.more-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.like-button.liked {
+  color: #1db954;
+}
+
+/* Reproductor */
+.player {
+  height: 90px;
+  background: #181818;
+  border-top: 1px solid #282828;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+}
+
+.player-track-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.player-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.player-details {
+  min-width: 0;
+}
+
+.player-title {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-artist {
+  color: #b3b3b3;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.control-button {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-button:hover {
+  color: white;
+  transform: scale(1.05);
+}
+
+.control-button.active {
+  color: #1db954;
+}
+
+.play-button {
+  background: white;
+  border: none;
+  color: black;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.05);
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.time-display {
+  font-size: 11px;
+  color: #b3b3b3;
+  min-width: 40px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.player-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.volume-button {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.volume-button:hover {
+  color: white;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+/* Empty state */
+.empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100%;
+  text-align: center;
+  color: #b3b3b3;
+}
+
+.empty-state h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.empty-state p {
+  font-size: 16px;
+  max-width: 400px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Scroll personalizado */
+.playlist-view::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.playlist-view::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.playlist-view::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #535353;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.playlist-view::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #727272;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .playlist-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .playlist-cover-large {
+    width: 150px;
+    height: 150px;
+  }
+
+  .playlist-info h1 {
+    font-size: 32px;
+  }
+
+  .track-list-header,
+  .track-item {
+    grid-template-columns: 30px 1fr 60px 80px;
+  }
+
+  .track-album {
+    display: none;
+  }
+
+  .player {
+    grid-template-columns: 1fr 1fr;
+    height: 100px;
+  }
+
+  .player-volume {
+    display: none;
   }
 }

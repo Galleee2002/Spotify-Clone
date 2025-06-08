@@ -1,0 +1,263 @@
+.player {
+  height: 90px;
+  background: #181818;
+  border-top: 1px solid #282828;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.player.compact {
+  height: 60px;
+  grid-template-columns: auto 1fr auto;
+}
+
+.player-track-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.player-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.player-details {
+  min-width: 0;
+}
+
+.player-title {
+  font-weight: 400;
+  font-size: 14px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.player-artist {
+  color: #a7a7a7;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+}
+
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 722px;
+  width: 100%;
+}
+
+.player-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.control-button {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-button:hover {
+  color: white;
+  transform: scale(1.06);
+}
+
+.control-button.active {
+  color: #1db954;
+}
+
+.play-button {
+  background: white;
+  border: none;
+  color: black;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.play-button:hover {
+  transform: scale(1.06);
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-display {
+  font-size: 11px;
+  color: #a7a7a7;
+  min-width: 40px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+}
+
+.progress-bar::-webkit-slider-track {
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar::-moz-range-track {
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  border: none;
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar::-moz-range-progress {
+  height: 4px;
+  background: #1db954;
+  border-radius: 2px;
+}
+
+.progress-container:hover .progress-bar::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+.progress-bar:hover::-webkit-slider-track {
+  background: #535353;
+}
+
+.player-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  min-width: 180px;
+}
+
+.volume-button {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.volume-button:hover {
+  color: white;
+}
+
+.volume-slider {
+  width: 93px;
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.volume-slider::-webkit-slider-track {
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-track {
+  height: 4px;
+  background: #4a4a4a;
+  border-radius: 2px;
+  border: none;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.player-volume:hover .volume-slider::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+.volume-slider:hover::-webkit-slider-track {
+  background: #535353;
+}

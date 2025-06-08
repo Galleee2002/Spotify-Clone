@@ -1,0 +1,267 @@
+/* Cambia todas las clases para evitar conflictos con App.css */
+
+.spotify-search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 364px;
+}
+
+.spotify-search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #242424;
+  border-radius: 24px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.spotify-search-input-container:hover {
+  background: #2a2a2a;
+  border-color: #535353;
+}
+
+.spotify-search-bar.focused .spotify-search-input-container {
+  background: #2a2a2a;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.spotify-search-icon {
+  color: #a7a7a7;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.spotify-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+  font-family: "Circular", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", sans-serif;
+}
+
+.spotify-search-input::placeholder {
+  color: #a7a7a7;
+}
+
+.spotify-clear-button,
+.spotify-filter-button {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spotify-clear-button:hover,
+.spotify-filter-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.spotify-filter-button.active {
+  color: #1db954;
+  background: rgba(29, 185, 84, 0.1);
+}
+
+/* Sugerencias de búsqueda */
+.spotify-search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #242424;
+  border: 1px solid #3e3e40;
+  border-radius: 8px;
+  margin-top: 8px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+.spotify-suggestions-header {
+  padding: 16px 16px 8px 16px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border-bottom: none;
+}
+
+.spotify-suggestion-item {
+  padding: 12px 16px;
+  color: #a7a7a7;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.spotify-suggestion-item:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.spotify-suggestion-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.spotify-suggestion-item::before {
+  content: "🎵";
+  opacity: 0.6;
+  font-size: 16px;
+}
+
+.spotify-suggestion-item:hover::before {
+  opacity: 1;
+}
+
+/* Filtros de búsqueda */
+.spotify-search-filters {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #242424;
+  border: 1px solid #3e3e40;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 8px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideDown 0.2s ease-out;
+}
+
+.spotify-filter-group {
+  margin-bottom: 20px;
+}
+
+.spotify-filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.spotify-filter-group label {
+  display: block;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.spotify-filter-group label input[type="checkbox"] {
+  margin-right: 12px;
+  accent-color: #1db954;
+  width: 16px;
+  height: 16px;
+}
+
+.spotify-filter-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spotify-filter-option {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  background: #181818;
+  color: #a7a7a7;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #3e3e40;
+}
+
+.spotify-filter-option:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #535353;
+  transform: translateY(-1px);
+}
+
+.spotify-filter-option.active {
+  background: #1db954;
+  color: #000000;
+  font-weight: 700;
+  border-color: #1db954;
+  transform: translateY(-1px);
+}
+
+.spotify-year-input {
+  background: #181818;
+  border: 1px solid #3e3e40;
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 14px;
+  width: 140px;
+  transition: all 0.2s ease;
+}
+
+.spotify-year-input:focus {
+  border-color: #1db954;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.2);
+}
+
+.spotify-year-input::placeholder {
+  color: #a7a7a7;
+}
+
+/* Animaciones */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .spotify-search-bar {
+    max-width: 100%;
+  }
+
+  .spotify-search-input-container {
+    padding: 10px 14px;
+  }
+
+  .spotify-search-filters,
+  .spotify-search-suggestions {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 16px 16px 0 0;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin: 0;
+  }
+}

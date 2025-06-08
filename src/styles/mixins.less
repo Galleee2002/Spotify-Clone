@@ -1,0 +1,27 @@
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-hover(@color: @spotify-white) {
+  transition: @transition-fast;
+
+  &:hover {
+    color: @color;
+    transform: scale(1.05);
+  }
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

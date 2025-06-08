@@ -1,0 +1,51 @@
+.audio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  height: 32px;
+  min-width: 64px;
+  padding: 4px;
+}
+
+.visualizer-bar {
+  width: 2px;
+  background: linear-gradient(to top, #1db954, #1ed760);
+  border-radius: 2px;
+  transition: height 0.1s ease-out;
+  min-height: 2px;
+  max-height: 100%;
+  transform-origin: bottom;
+}
+
+.visualizer-bar:nth-child(odd) {
+  animation: pulse-odd 2s infinite ease-in-out;
+}
+
+.visualizer-bar:nth-child(even) {
+  animation: pulse-even 2.2s infinite ease-in-out;
+}
+
+@keyframes pulse-odd {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(0.8);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-even {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
