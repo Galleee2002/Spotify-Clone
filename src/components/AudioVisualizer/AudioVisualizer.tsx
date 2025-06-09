@@ -18,7 +18,11 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 
     if (isPlaying) {
       interval = setInterval(() => {
-        if (audioData?.frequencyData) {
+        if (
+          audioData &&
+          typeof audioData === "object" &&
+          "frequencyData" in audioData
+        ) {
           // Usar datos reales del analizador de audio
           const step = Math.floor(audioData.frequencyData.length / barCount);
           const newBars = Array(barCount)

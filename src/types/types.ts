@@ -5,12 +5,12 @@
 export interface Track {
   id: string;
   title: string;
-  artist: string;
+  artist: string;           // nombre o id del artista (puede ser string para simplificar)
   album: string;
   duration: number;
   audioUrl: string;
   coverUrl: string;
-  liked: boolean; // ← Usar 'liked' como en tu sampleData
+  liked: boolean;
   explicit?: boolean;
   year?: number;
   genre?: string | string[];
@@ -27,14 +27,14 @@ export interface Artist {
   verified: boolean;
   genres: string[];
   popularity?: number;
-  topTracks: Track[];
+  topTracks: Track[];       // lista de tracks relacionados
 }
 
 export interface Album {
   id: string;
   name: string;
-  artist: string | Artist; // Permitir ambos formatos
-  artistId?: string;
+  artist: string | Artist;  // puede ser nombre o el objeto completo para flexibilidad
+  artistId?: string;        // opcional, para referencias
   coverUrl: string;
   releaseDate: string;
   tracks: Track[];
@@ -67,7 +67,6 @@ export interface User {
   avatarUrl: string;
   isPremium: boolean;
   playlists: string[] | Playlist[];
-  // Propiedades adicionales de tu sampleData
   username?: string;
   displayName?: string;
   followers?: number;

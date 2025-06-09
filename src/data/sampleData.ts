@@ -1,6 +1,7 @@
+// src/data/sampleData.ts
 import { Track, Playlist, Artist, Album, User } from "../types";
 
-// Datos de ejemplo para artistas
+/* ARTISTS */
 export const sampleArtists: Artist[] = [
   {
     id: "artist-1",
@@ -48,7 +49,7 @@ export const sampleArtists: Artist[] = [
   },
 ];
 
-// Datos de ejemplo para tracks
+/* TRACKS */
 export const sampleTracks: Track[] = [
   {
     id: "track-1",
@@ -63,8 +64,8 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 95,
     releaseDate: "1975-10-31",
-    genre: ["Rock", "Progressive Rock"],
-    preview: "https://p.scdn.co/mp3-preview/sample1",
+    genres: ["Rock", "Progressive Rock"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample1",
   },
   {
     id: "track-2",
@@ -79,8 +80,8 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 92,
     releaseDate: "1971-11-08",
-    genre: ["Rock", "Hard Rock"],
-    preview: "https://p.scdn.co/mp3-preview/sample2",
+    genres: ["Rock", "Hard Rock"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample2",
   },
   {
     id: "track-3",
@@ -95,13 +96,13 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 89,
     releaseDate: "1976-12-08",
-    genre: ["Rock", "Country Rock"],
-    preview: "https://p.scdn.co/mp3-preview/sample3",
+    genres: ["Rock", "Country Rock"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample3",
   },
   {
     id: "track-4",
     title: "Sweet Child O' Mine",
-    artist: "Guns N' Roses",
+    artist: "Guns and Roses",
     album: "Appetite for Destruction",
     duration: 356,
     coverUrl:
@@ -111,8 +112,8 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 88,
     releaseDate: "1987-07-21",
-    genre: ["Hard Rock", "Heavy Metal"],
-    preview: "https://p.scdn.co/mp3-preview/sample4",
+    genres: ["Hard Rock", "Heavy Metal"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample4",
   },
   {
     id: "track-5",
@@ -127,13 +128,13 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 94,
     releaseDate: "1977-10-07",
-    genre: ["Rock", "Arena Rock"],
-    preview: "https://p.scdn.co/mp3-preview/sample5",
+    genres: ["Rock", "Arena Rock"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample5",
   },
   {
     id: "track-6",
     title: "Another Brick in the Wall",
-    artist: "Pink Floyd",
+    artist: "Pink floyd",
     album: "The Wall",
     duration: 238,
     coverUrl:
@@ -143,12 +144,12 @@ export const sampleTracks: Track[] = [
     explicit: false,
     popularity: 90,
     releaseDate: "1979-11-30",
-    genre: ["Progressive Rock", "Art Rock"],
-    preview: "https://p.scdn.co/mp3-preview/sample6",
+    genres: ["Progressive Rock", "Art Rock"],
+    previewUrl: "https://p.scdn.co/mp3-preview/sample6",
   },
 ];
 
-// Usuario de ejemplo (se define después de sampleTracks para evitar referencias circulares)
+/* USER */
 export const sampleUser: User = {
   id: "user-1",
   name: "Music Lover",
@@ -161,12 +162,12 @@ export const sampleUser: User = {
   following: 200,
   isPremium: true,
   country: "AR",
-  playlists: [], // Se asigna después
+  playlists: [],
   likedTracks: sampleTracks.filter((track) => track.liked),
   recentlyPlayed: [sampleTracks[0], sampleTracks[2], sampleTracks[4]],
 };
 
-// Playlists de ejemplo
+/* PLAYLISTS */
 export const samplePlaylists: Playlist[] = [
   {
     id: "playlist-1",
@@ -226,10 +227,10 @@ export const samplePlaylists: Playlist[] = [
   },
 ];
 
-// Actualizar playlists del usuario
+// Asignar IDs de playlists al usuario
 sampleUser.playlists = samplePlaylists.map((p) => p.id);
 
-// Álbumes de ejemplo
+/* ALBUMS */
 export const sampleAlbums: Album[] = [
   {
     id: "album-1",
@@ -244,7 +245,7 @@ export const sampleAlbums: Album[] = [
     genres: ["Rock", "Progressive Rock"],
     duration: 355,
     popularity: 95,
-    releaseType: "album" as const,
+    releaseType: "album",
     label: "EMI Records",
   },
   {
@@ -260,12 +261,12 @@ export const sampleAlbums: Album[] = [
     genres: ["Rock", "Hard Rock"],
     duration: 482,
     popularity: 92,
-    releaseType: "album" as const,
+    releaseType: "album",
     label: "Atlantic Records",
   },
 ];
 
-// Géneros populares
+/* POPULAR GENRES */
 export const popularGenres = [
   "Rock",
   "Pop",
@@ -285,7 +286,7 @@ export const popularGenres = [
   "Latin",
 ];
 
-// Configuraciones por defecto
+/* DEFAULT PLAYER STATE */
 export const defaultPlayerState = {
   currentTrack: null,
   isPlaying: false,
@@ -301,11 +302,11 @@ export const defaultPlayerState = {
   history: [],
 };
 
-// URLs de audio por defecto (para demo)
+/* AUDIO DEMOS */
 export const defaultAudioUrls = {
   demo1: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
   demo2:
     "https://file-examples.com/storage/fe86d2d8e1a86fb7f84b1ff/2017/11/file_example_MP3_700KB.mp3",
   silence:
-    "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbisIGLIDO8diJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbisIGLIDO8diJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbisIGLIDO8diJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbisIGLIDO8diJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbis",
+    "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbisIGLIDO8diJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmMeBDCBzvLZiTYIF2m98OScTQwOUarm7shvFA5SqOHvwmYdBjOB0fPbis",
 };
