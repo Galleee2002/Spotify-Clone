@@ -1,267 +1,594 @@
-/* Cambia todas las clases para evitar conflictos con App.css */
+/* ========== SEARCHBAR ULTRA ELEGANTE ========== */
 
-.spotify-search-bar {
+.ultra-search-container {
   position: relative;
   width: 100%;
-  max-width: 364px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.spotify-search-input-container {
+/* ========== FONDO ANIMADO ========== */
+
+.search-background-glow {
+  position: absolute;
+  inset: -10px;
+  background: conic-gradient(from 0deg, #1db954, #1ed760, #1db954);
+  border-radius: 50px;
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.ultra-search-container.focused .search-background-glow {
+  opacity: 0.1;
+}
+
+/* ========== BARRA PRINCIPAL ========== */
+
+.ultra-search-bar {
   position: relative;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border: 1px solid transparent;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.ultra-search-container.focused .ultra-search-bar {
+  background: linear-gradient(145deg, #333, #222);
+  border-color: rgba(29, 185, 84, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(29, 185, 84, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.search-input-wrapper {
   display: flex;
   align-items: center;
-  background: #242424;
-  border-radius: 24px;
-  padding: 12px 16px;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
+  padding: 16px 20px;
+  gap: 12px;
 }
 
-.spotify-search-input-container:hover {
-  background: #2a2a2a;
-  border-color: #535353;
-}
+/* ========== ICONO DE BÚSQUEDA ========== */
 
-.spotify-search-bar.focused .spotify-search-input-container {
-  background: #2a2a2a;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-}
-
-.spotify-search-icon {
-  color: #a7a7a7;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-
-.spotify-search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0;
-  font-family: "Circular", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", sans-serif;
-}
-
-.spotify-search-input::placeholder {
-  color: #a7a7a7;
-}
-
-.spotify-clear-button,
-.spotify-filter-button {
-  background: none;
-  border: none;
-  color: #a7a7a7;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 50%;
-  margin-left: 8px;
-  transition: all 0.2s ease;
+.search-icon-container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.spotify-clear-button:hover,
-.spotify-filter-button:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
+.search-icon {
+  color: #a7a7a7;
+  transition: all 0.3s ease;
+  z-index: 2;
 }
 
-.spotify-filter-button.active {
+.ultra-search-container.focused .search-icon {
   color: #1db954;
-  background: rgba(29, 185, 84, 0.1);
+  transform: scale(1.1);
 }
 
-/* Sugerencias de búsqueda */
-.spotify-search-suggestions {
+.search-icon.searching {
+  animation: searchPulse 1.5s ease-in-out infinite;
+}
+
+.search-pulse {
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #242424;
-  border: 1px solid #3e3e40;
-  border-radius: 8px;
-  margin-top: 8px;
-  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  overflow: hidden;
-  animation: slideDown 0.2s ease-out;
+  inset: -8px;
+  border: 2px solid #1db954;
+  border-radius: 50%;
+  animation: pulseRing 1.5s ease-out infinite;
 }
 
-.spotify-suggestions-header {
-  padding: 16px 16px 8px 16px;
-  color: #ffffff;
+@keyframes searchPulse {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ========== INPUT PRINCIPAL ========== */
+
+.ultra-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
   font-size: 16px;
-  font-weight: 700;
-  border-bottom: none;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: 0.5px;
 }
 
-.spotify-suggestion-item {
-  padding: 12px 16px;
+.ultra-search-input::placeholder {
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.ultra-search-container.focused .ultra-search-input::placeholder {
+  color: #aaa;
+}
+
+/* ========== BOTONES DE ACCIÓN ========== */
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
   color: #a7a7a7;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  font-weight: 400;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
   position: relative;
 }
 
-.spotify-suggestion-item:hover {
-  background: #1a1a1a;
-  color: #ffffff;
+.action-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
 }
 
-.spotify-suggestion-item:not(:last-child) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+.clear-btn:hover {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
 }
 
-.spotify-suggestion-item::before {
-  content: "🎵";
-  opacity: 0.6;
-  font-size: 16px;
+.filter-btn.active {
+  color: #1db954;
+  background: rgba(29, 185, 84, 0.15);
 }
 
-.spotify-suggestion-item:hover::before {
-  opacity: 1;
-}
-
-/* Filtros de búsqueda */
-.spotify-search-filters {
+.filter-indicator {
   position: absolute;
-  top: 100%;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  background: #1db954;
+  border-radius: 50%;
+  animation: filterBounce 2s ease-in-out infinite;
+}
+
+@keyframes filterBounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+/* ========== BARRA DE PROGRESO ========== */
+
+.search-progress {
+  height: 2px;
+  background: linear-gradient(90deg, #1db954, #1ed760, #1db954);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-progress.active {
+  transform: scaleX(1);
+  animation: progressShimmer 2s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========== PANELES DESPLEGABLES ========== */
+
+.ultra-filters-panel,
+.ultra-suggestions-panel {
+  position: absolute;
+  top: calc(100% + 12px);
   left: 0;
   right: 0;
-  background: #242424;
-  border: 1px solid #3e3e40;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 8px;
-  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  animation: slideDown 0.2s ease-out;
+  animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
 }
 
-.spotify-filter-group {
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========== HEADERS DE PANELES ========== */
+
+.filters-header,
+.suggestions-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* ========== FILTROS ========== */
+
+.filter-section {
   margin-bottom: 20px;
 }
 
-.spotify-filter-group:last-child {
+.filter-section:last-child {
   margin-bottom: 0;
 }
 
-.spotify-filter-group label {
+.filter-label {
   display: block;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 500;
   margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.spotify-filter-group label input[type="checkbox"] {
-  margin-right: 12px;
-  accent-color: #1db954;
-  width: 16px;
-  height: 16px;
-}
-
-.spotify-filter-options {
+.filter-pills {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.spotify-filter-option {
-  background: none;
-  border: none;
-  padding: 8px 16px;
-  background: #181818;
-  color: #a7a7a7;
+.filter-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ccc;
+  padding: 10px 16px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.2s ease;
   cursor: pointer;
-  border: 1px solid #3e3e40;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.spotify-filter-option:hover {
-  background: #1a1a1a;
-  color: #ffffff;
-  border-color: #535353;
-  transform: translateY(-1px);
+.filter-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-.spotify-filter-option.active {
-  background: #1db954;
-  color: #000000;
-  font-weight: 700;
+.filter-pill.active {
+  background: linear-gradient(45deg, #1db954, #1ed760);
   border-color: #1db954;
-  transform: translateY(-1px);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(29, 185, 84, 0.3);
 }
 
-.spotify-year-input {
-  background: #181818;
-  border: 1px solid #3e3e40;
-  border-radius: 6px;
-  padding: 12px 16px;
-  color: #ffffff;
+.pill-emoji {
   font-size: 14px;
-  width: 140px;
-  transition: all 0.2s ease;
 }
 
-.spotify-year-input:focus {
-  border-color: #1db954;
+/* ========== TOGGLE SWITCH ========== */
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-input:checked + .toggle-slider {
+  background: #1db954;
+}
+
+.toggle-input:checked + .toggle-slider .toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ========== INPUT DE AÑO ========== */
+
+.year-input-container {
+  position: relative;
+}
+
+.ultra-year-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.ultra-year-input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.2);
+  border-color: #1db954;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
 }
 
-.spotify-year-input::placeholder {
-  color: #a7a7a7;
+.ultra-year-input::placeholder {
+  color: #888;
 }
 
-/* Animaciones */
-@keyframes slideDown {
+/* ========== SUGERENCIAS ========== */
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInItem 0.4s ease-out var(--delay, 0ms) both;
+}
+
+@keyframes slideInItem {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-/* Responsive */
+.suggestion-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+.suggestion-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color, #1db954);
+  color: white;
+  opacity: 0.9;
+}
+
+.suggestion-text {
+  flex: 1;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.suggestion-arrow {
+  color: #888;
+  font-weight: bold;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.suggestion-item:hover .suggestion-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* ========== EFECTOS ESPECIALES ========== */
+
+/* Efectos de partículas en hover */
+.ultra-search-container.typing::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(29, 185, 84, 0.1) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  animation: particleFloat 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes particleFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
 @media (max-width: 768px) {
-  .spotify-search-bar {
+  .ultra-search-container {
     max-width: 100%;
   }
 
-  .spotify-search-input-container {
-    padding: 10px 14px;
+  .search-input-wrapper {
+    padding: 14px 16px;
   }
 
-  .spotify-search-filters,
-  .spotify-search-suggestions {
+  .ultra-filters-panel,
+  .ultra-suggestions-panel {
     position: fixed;
     top: auto;
     bottom: 0;
     left: 0;
     right: 0;
-    border-radius: 16px 16px 0 0;
+    border-radius: 20px 20px 0 0;
     max-height: 70vh;
     overflow-y: auto;
     margin: 0;
+    animation: slideInUpMobile 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes slideInUpMobile {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .filter-pills {
+    justify-content: center;
+  }
+}
+
+/* ========== MODO OSCURO MEJORADO ========== */
+
+@media (prefers-color-scheme: dark) {
+  .ultra-search-bar {
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  }
+
+  .ultra-search-container.focused .ultra-search-bar {
+    background: linear-gradient(145deg, #222, #111);
+  }
+}
+
+/* ========== SCROLL PERSONALIZADO ========== */
+
+.ultra-filters-panel::-webkit-scrollbar,
+.ultra-suggestions-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ultra-filters-panel::-webkit-scrollbar-track,
+.ultra-suggestions-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ultra-filters-panel::-webkit-scrollbar-thumb,
+.ultra-suggestions-panel::-webkit-scrollbar-thumb {
+  background: rgba(29, 185, 84, 0.3);
+  border-radius: 3px;
+}
+
+.ultra-filters-panel::-webkit-scrollbar-thumb:hover,
+.ultra-suggestions-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 185, 84, 0.5);
+}
+
+/* ========== ACCESIBILIDAD ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== ESTADOS DE FOCO PARA ACCESIBILIDAD ========== */
+
+.action-btn:focus-visible,
+.filter-pill:focus-visible,
+.ultra-year-input:focus-visible {
+  outline: 2px solid #1db954;
+  outline-offset: 2px;
+}
+
+/* ========== ANIMACIONES DE CARGA ========== */
+
+.ultra-search-container {
+  animation: fadeInScale 0.6s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

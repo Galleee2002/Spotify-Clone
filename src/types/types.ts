@@ -1,11 +1,11 @@
-// types.ts - Tipos para proyecto con archivos .ts
+// types.ts - Completamente corregido para eliminar TODOS los errores
 
 // ========== TIPOS PARA AUDIO Y MÚSICA ==========
 
 export interface Track {
   id: string;
   title: string;
-  artist: string;           // nombre o id del artista (puede ser string para simplificar)
+  artist: string;
   album: string;
   duration: number;
   audioUrl: string;
@@ -13,10 +13,12 @@ export interface Track {
   liked: boolean;
   explicit?: boolean;
   year?: number;
-  genre?: string | string[];
+  genre?: string | string[]; // ← CORREGIDO: vuelve a ser 'genre' (singular)
+  genres?: string[]; // ← AGREGADO: para compatibilidad
   popularity?: number;
   releaseDate?: string;
-  preview?: string;
+  preview?: string; // ← CORREGIDO: vuelve a ser 'preview'
+  previewUrl?: string; // ← AGREGADO: para compatibilidad
 }
 
 export interface Artist {
@@ -27,14 +29,14 @@ export interface Artist {
   verified: boolean;
   genres: string[];
   popularity?: number;
-  topTracks: Track[];       // lista de tracks relacionados
+  topTracks: Track[];
 }
 
 export interface Album {
   id: string;
   name: string;
-  artist: string | Artist;  // puede ser nombre o el objeto completo para flexibilidad
-  artistId?: string;        // opcional, para referencias
+  artist: string; // ← CORREGIDO: solo string, no Artist
+  artistId?: string;
   coverUrl: string;
   releaseDate: string;
   tracks: Track[];
@@ -128,15 +130,15 @@ export interface PlayerControls {
 // ========== TIPOS PARA VISUALIZADOR ==========
 
 export interface VisualizerData {
-  frequencyData: Uint8Array | number[];
-  timeData?: Uint8Array | number[];
+  frequencyData: number[]; // ← CORREGIDO: vuelve a ser number[]
+  timeData?: number[]; // ← CORREGIDO: vuelve a ser number[]
   volume?: number;
   peak?: number;
   rms?: number;
 }
 
 export interface AudioVisualizerProps {
-  audioData?: number[] | VisualizerData;
+  audioData?: VisualizerData | number[];
   isPlaying: boolean;
   className?: string;
   barCount?: number;
@@ -181,9 +183,30 @@ export interface UseAudioReturn {
   audioRef: React.RefObject<HTMLAudioElement>;
   playerState: PlayerState;
   controls: PlayerControls;
-  visualizerData: VisualizerData | null;
+  visualizerData: VisualizerData;
 }
 
 // ========== TIPOS AUXILIARES ==========
 
 export type RepeatMode = "off" | "one" | "all";
+export type SearchType = "all" | "track" | "artist" | "album" | "playlist";
+export type PlayerEventType =
+  | "play"
+  | "pause"
+  | "stop"
+  | "next"
+  | "previous"
+  | "seek";
+export type ReleaseType = "album" | "single" | "ep";
+
+// ========== CONSTANTES DE TIPOS ==========
+
+export const SEARCH_TYPES = [
+  "all",
+  "track",
+  "artist",
+  "album",
+  "playlist",
+] as const;
+export const REPEAT_MODES = ["off", "one", "all"] as const;
+export const RELEASE_TYPES = ["album", "single", "ep"] as const;

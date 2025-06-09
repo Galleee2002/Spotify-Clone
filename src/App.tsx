@@ -17,7 +17,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [playlists] = useState<Playlist[]>(samplePlaylists);
 
-  // ← Nuevo estado para filtros
+  // Estado para filtros
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     type: "all",
     explicit: true,
@@ -44,7 +44,9 @@ const App: React.FC = () => {
     if (currentPlaylist && currentPlaylist.tracks.length > 0) {
       // Limpiar queue actual y cargar nuevas canciones
       currentPlaylist.tracks.forEach((track) => {
-        if (!playerState.queue.find((qTrack) => qTrack.id === track.id)) {
+        if (
+          !playerState.queue.find((qTrack: Track) => qTrack.id === track.id)
+        ) {
           controls.addToQueue(track);
         }
       });
@@ -78,9 +80,7 @@ const App: React.FC = () => {
   };
 
   const handleTrackLike = (trackId: string) => {
-    
     console.log("Toggle like for track:", trackId);
-    
   };
 
   return (
@@ -101,8 +101,8 @@ const App: React.FC = () => {
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             placeholder="Buscar canciones, artistas o álbumes..."
-            filters={searchFilters} // ← Agregado
-            onFiltersChange={setSearchFilters} // ← Agregado
+            filters={searchFilters}
+            onFiltersChange={setSearchFilters}
           />
         </div>
 

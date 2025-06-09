@@ -17,8 +17,8 @@ export const useAudio = (): UseAudioReturn => {
   const [playerState, setPlayerState] = useState<PlayerState>({
     currentTrack: null,
     isPlaying: false,
-    isPaused: false, // ← Propiedad agregada
-    isLoading: false, // ← Propiedad agregada
+    isPaused: false,
+    isLoading: false,
     currentTime: 0,
     duration: 0,
     volume: 0.7,
@@ -29,9 +29,9 @@ export const useAudio = (): UseAudioReturn => {
     history: [],
   });
 
-  const [visualizerData, setVisualizerData] = useState<VisualizerData | null>(
-    null
-  );
+  const [visualizerData, setVisualizerData] = useState<VisualizerData>({
+    frequencyData: [],
+  });
 
   // Inicializar contexto de audio para visualizador
   const initializeAudioContext = useCallback(() => {
@@ -75,13 +75,14 @@ export const useAudio = (): UseAudioReturn => {
         frequencyArray.length
     );
 
-    setVisualizerData({
-      frequencyData,
-      timeData,
+    setVisualizerData((prev) => ({
+      ...prev,
+      frequencyData: Array.from(frequencyData),
+      timeData: Array.from(timeData),
       volume: volume / 255,
       peak: peak / 255,
       rms: rms / 255,
-    });
+    }));
   }, []);
 
   // Función para cargar un track
@@ -170,7 +171,7 @@ export const useAudio = (): UseAudioReturn => {
 
   const toggleRepeat = useCallback(() => {
     setPlayerState((prev) => {
-      const modes: RepeatMode[] = ["off", "one", "all"]; // ← Corregido: "one" y "all"
+      const modes: RepeatMode[] = ["off", "one", "all"];
       const currentIndex = modes.indexOf(prev.repeatMode);
       const nextIndex = (currentIndex + 1) % modes.length;
       return { ...prev, repeatMode: modes[nextIndex] };
@@ -189,7 +190,7 @@ export const useAudio = (): UseAudioReturn => {
       if (prev.isShuffled) {
         nextIndex = Math.floor(Math.random() * prev.queue.length);
       } else if (nextIndex >= prev.queue.length) {
-        nextIndex = prev.repeatMode === "all" ? 0 : currentIndex; // ← Corregido: "all"
+        nextIndex = prev.repeatMode === "all" ? 0 : currentIndex;
       }
 
       const nextTrack = prev.queue[nextIndex];
@@ -278,7 +279,6 @@ export const useAudio = (): UseAudioReturn => {
     const handleEnded = () => {
       setPlayerState((prev) => {
         if (prev.repeatMode === "one") {
-          // ← Corregido: "one"
           audio.currentTime = 0;
           audio.play();
           return prev;
