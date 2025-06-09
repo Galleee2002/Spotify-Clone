@@ -1,6 +1,6 @@
-// types.ts - Completamente corregido para eliminar TODOS los errores
 
-// ========== TIPOS PARA AUDIO Y MÚSICA ==========
+
+
 
 export interface Track {
   id: string;
@@ -13,12 +13,12 @@ export interface Track {
   liked: boolean;
   explicit?: boolean;
   year?: number;
-  genre?: string | string[]; // ← CORREGIDO: vuelve a ser 'genre' (singular)
-  genres?: string[]; // ← AGREGADO: para compatibilidad
+  genre?: string | string[]; 
+  genres?: string[]; 
   popularity?: number;
   releaseDate?: string;
-  preview?: string; // ← CORREGIDO: vuelve a ser 'preview'
-  previewUrl?: string; // ← AGREGADO: para compatibilidad
+  preview?: string; 
+  previewUrl?: string; 
 }
 
 export interface Artist {
@@ -35,7 +35,7 @@ export interface Artist {
 export interface Album {
   id: string;
   name: string;
-  artist: string; // ← CORREGIDO: solo string, no Artist
+  artist: string; 
   artistId?: string;
   coverUrl: string;
   releaseDate: string;
@@ -78,7 +78,7 @@ export interface User {
   recentlyPlayed?: Track[];
 }
 
-// ========== TIPOS PARA BÚSQUEDA ==========
+
 
 export interface SearchFilters {
   type: "all" | "track" | "artist" | "album" | "playlist";
@@ -96,7 +96,7 @@ export interface SearchBarProps {
   onFiltersChange?: (filters: SearchFilters) => void;
 }
 
-// ========== TIPOS PARA REPRODUCTOR ==========
+
 
 export interface PlayerState {
   currentTrack: Track | null;
@@ -127,11 +127,11 @@ export interface PlayerControls {
   removeFromQueue: (trackId: string) => void;
 }
 
-// ========== TIPOS PARA VISUALIZADOR ==========
+
 
 export interface VisualizerData {
-  frequencyData: number[]; // ← CORREGIDO: vuelve a ser number[]
-  timeData?: number[]; // ← CORREGIDO: vuelve a ser number[]
+  frequencyData: number[]; 
+  timeData?: number[]; 
   volume?: number;
   peak?: number;
   rms?: number;
@@ -147,7 +147,7 @@ export interface AudioVisualizerProps {
   responsive?: boolean;
 }
 
-// ========== TIPOS PARA COMPONENTES ==========
+
 
 export interface SidebarProps {
   playlists: Playlist[];
@@ -177,7 +177,7 @@ export interface PlayerProps {
   compact?: boolean;
 }
 
-// ========== TIPOS PARA HOOKS ==========
+
 
 export interface UseAudioReturn {
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -186,7 +186,7 @@ export interface UseAudioReturn {
   visualizerData: VisualizerData;
 }
 
-// ========== TIPOS AUXILIARES ==========
+
 
 export type RepeatMode = "off" | "one" | "all";
 export type SearchType = "all" | "track" | "artist" | "album" | "playlist";
@@ -199,7 +199,7 @@ export type PlayerEventType =
   | "seek";
 export type ReleaseType = "album" | "single" | "ep";
 
-// ========== CONSTANTES DE TIPOS ==========
+
 
 export const SEARCH_TYPES = [
   "all",

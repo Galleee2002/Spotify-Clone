@@ -10,7 +10,7 @@ import { Playlist, Track, SearchFilters } from "./types";
 import "./App.css";
 
 const App: React.FC = () => {
-  // Estados principales
+  
   const [activePlaylist, setActivePlaylist] = useState<string | null>(
     "playlist-1"
   );
@@ -24,10 +24,10 @@ const App: React.FC = () => {
     year: undefined,
   });
 
-  // Hook de audio personalizado
+  
   const { audioRef, playerState, controls, visualizerData } = useAudio();
 
-  // Playlist y tracks actuales
+  
   const currentPlaylist = activePlaylist
     ? playlists.find((p) => p.id === activePlaylist)
     : null;
@@ -39,10 +39,10 @@ const App: React.FC = () => {
         track.album.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
 
-  // Cargar queue inicial cuando se selecciona una playlist
+  
   useEffect(() => {
     if (currentPlaylist && currentPlaylist.tracks.length > 0) {
-      // Limpiar queue actual y cargar nuevas canciones
+      
       currentPlaylist.tracks.forEach((track) => {
         if (
           !playerState.queue.find((qTrack: Track) => qTrack.id === track.id)
@@ -53,25 +53,25 @@ const App: React.FC = () => {
     }
   }, [activePlaylist, currentPlaylist, controls, playerState.queue]);
 
-  // Handlers
+  
   const handlePlaylistSelect = (playlistId: string) => {
     setActivePlaylist(playlistId);
   };
 
   const handleTrackSelect = (track: Track) => {
-    // Si no hay track actual o es diferente, cargar el nuevo
+    
     if (!playerState.currentTrack || playerState.currentTrack.id !== track.id) {
-      // Simular carga de track (en una app real esto vendría del hook useAudio)
+      
       if (audioRef.current) {
         audioRef.current.src = track.audioUrl;
         audioRef.current.load();
       }
 
-      // Aquí normalmente llamarías a un método del hook para cargar el track
-      // controls.loadTrack(track);
+      
+      
     }
 
-    // Reproducir
+    
     if (playerState.isPlaying) {
       controls.pause();
     } else {
@@ -85,7 +85,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      {/* Sidebar */}
+      {}
       <Sidebar
         playlists={playlists}
         activePlaylist={activePlaylist}
@@ -93,9 +93,9 @@ const App: React.FC = () => {
         user={sampleUser}
       />
 
-      {/* Contenido principal */}
+      {}
       <main className="main-content">
-        {/* Header con búsqueda */}
+        {}
         <div className="main-header">
           <SearchBar
             searchTerm={searchTerm}
@@ -106,10 +106,10 @@ const App: React.FC = () => {
           />
         </div>
 
-        {/* Vista de playlist */}
+        {}
         {currentPlaylist && (
           <div className="playlist-view">
-            {/* Header de playlist */}
+            {}
             <div className="playlist-header">
               <img
                 src={currentPlaylist.coverUrl}
@@ -123,7 +123,7 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Lista de tracks */}
+            {}
             <TrackList
               tracks={filteredTracks}
               currentTrack={playerState.currentTrack}
@@ -133,7 +133,7 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Mensaje cuando no hay playlist seleccionada */}
+        {}
         {!currentPlaylist && (
           <div className="empty-state">
             <h2>Selecciona una playlist</h2>
@@ -144,10 +144,10 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Reproductor */}
+      {}
       <Player playerState={playerState} controls={controls} />
 
-      {/* Audio element oculto */}
+      {}
       <audio ref={audioRef} preload="metadata" crossOrigin="anonymous" />
     </div>
   );

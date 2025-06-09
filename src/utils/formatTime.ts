@@ -1,9 +1,4 @@
-/**
- *
- * @param seconds
- * @param showHours
- * @returns
- */
+
 export const formatTime = (
   seconds: number,
   showHours: boolean = false
@@ -25,11 +20,7 @@ export const formatTime = (
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
-/**
- *
- * @param timeString
- * @returns
- */
+
 export const parseTimeToSeconds = (timeString: string): number => {
   const parts = timeString.split(":").map(Number);
 
@@ -44,21 +35,12 @@ export const parseTimeToSeconds = (timeString: string): number => {
   return 0;
 };
 
-/**
- *
- * @param seconds
- * @returns
- */
+
 export const formatDuration = (seconds: number): string => {
   return formatTime(seconds, false);
 };
 
-/**
- *
- * @param currentTime
- * @param duration
- * @returns
- */
+
 export const getProgressPercentage = (
   currentTime: number,
   duration: number

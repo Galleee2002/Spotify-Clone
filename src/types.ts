@@ -1,20 +1,20 @@
-// types.ts - Archivo completo de tipos para tu proyecto Spotify
 
-// ========== TIPOS PARA AUDIO Y MÚSICA ==========
+
+
 
 export interface Track {
   id: string;
   title: string;
   artist: string;
   album: string;
-  duration: number; // en segundos
+  duration: number; 
   audioUrl: string;
   coverUrl: string;
   isLiked?: boolean;
-  liked?: boolean; // Para compatibilidad con sampleData existente
+  liked?: boolean; 
   explicit?: boolean;
   year?: number;
-  genre?: string | string[]; // Permitir ambos formatos
+  genre?: string | string[]; 
   popularity?: number;
   releaseDate?: string;
   preview?: string;
@@ -54,8 +54,8 @@ export interface Playlist {
   tracks: Track[];
   createdBy: string;
   isPublic: boolean;
-  createdAt: Date | string; // Permitir ambos formatos
-  updatedAt: Date | string; // Permitir ambos formatos
+  createdAt: Date | string; 
+  updatedAt: Date | string; 
   owner?: User;
   followers?: number;
 }
@@ -66,8 +66,8 @@ export interface User {
   email: string;
   avatarUrl: string;
   isPremium: boolean;
-  playlists: string[] | Playlist[]; // Permitir ambos formatos
-  // Propiedades adicionales para compatibilidad
+  playlists: string[] | Playlist[]; 
+  
   username?: string;
   displayName?: string;
   followers?: number;
@@ -77,7 +77,7 @@ export interface User {
   recentlyPlayed?: Track[];
 }
 
-// ========== TIPOS PARA BÚSQUEDA ==========
+
 
 export interface SearchFilters {
   type: "all" | "track" | "artist" | "album" | "playlist";
@@ -99,7 +99,7 @@ export interface SearchBarProps {
   onFiltersChange?: (filters: SearchFilters) => void;
 }
 
-// ========== TIPOS PARA REPRODUCTOR ==========
+
 
 export interface PlayerState {
   currentTrack: Track | null;
@@ -127,13 +127,13 @@ export interface PlayerControls {
   toggleMute: () => void;
   toggleShuffle: () => void;
   setRepeatMode?: (mode: "off" | "one" | "all") => void;
-  toggleRepeat?: () => void; // Para compatibilidad con el hook existente
+  toggleRepeat?: () => void; 
   addToQueue: (track: Track) => void;
   removeFromQueue: (trackId: string) => void;
   clearQueue?: () => void;
 }
 
-// ========== TIPOS PARA VISUALIZADOR ==========
+
 
 export interface VisualizerData {
   frequencyData: number[];
@@ -144,21 +144,21 @@ export interface AudioVisualizerProps {
   audioData?: number[] | VisualizerData;
   isPlaying: boolean;
   className?: string;
-  // Propiedades adicionales para compatibilidad
+  
   barCount?: number;
   height?: number;
   color?: string;
   responsive?: boolean;
 }
 
-// ========== TIPOS PARA COMPONENTES ==========
+
 
 export interface SidebarProps {
   playlists: Playlist[];
   activePlaylist: string | null;
   onPlaylistSelect: (playlistId: string) => void;
   user: User;
-  // Propiedades adicionales para compatibilidad
+  
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }
@@ -169,7 +169,7 @@ export interface TrackListProps {
   onTrackSelect: (track: Track) => void;
   onTrackLike: (trackId: string) => void;
   isLoading?: boolean;
-  // Propiedades adicionales para compatibilidad
+  
   showHeader?: boolean;
   showAlbum?: boolean;
   showDuration?: boolean;
@@ -179,12 +179,12 @@ export interface TrackListProps {
 export interface PlayerProps {
   playerState: PlayerState;
   controls: PlayerControls;
-  // Propiedades adicionales para compatibilidad
+  
   className?: string;
   compact?: boolean;
 }
 
-// ========== TIPOS PARA HOOKS ==========
+
 
 export interface UseAudioReturn {
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -193,7 +193,7 @@ export interface UseAudioReturn {
   visualizerData: number[] | VisualizerData;
 }
 
-// ========== TIPOS PARA API (si planeas conectar con una API) ==========
+
 
 export interface ApiResponse<T> {
   data: T;
@@ -209,7 +209,7 @@ export interface SearchResponse {
   hasMore: boolean;
 }
 
-// ========== TIPOS PARA EVENTOS ==========
+
 
 export interface TrackEvent {
   type: "play" | "pause" | "like" | "share" | "add_to_playlist";
@@ -223,7 +223,7 @@ export interface PlaylistEvent {
   timestamp: Date;
 }
 
-// ========== TIPOS AUXILIARES ==========
+
 
 export type RepeatMode = "off" | "one" | "all";
 export type SearchType = "all" | "track" | "artist" | "album" | "playlist";
@@ -235,7 +235,7 @@ export type PlayerEventType =
   | "previous"
   | "seek";
 
-// ========== CONSTANTES DE TIPOS ==========
+
 
 export const SEARCH_TYPES = [
   "all",

@@ -19,7 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Sugerencias mejoradas con iconos
+  
   const suggestions = [
     { text: "Rock classics", icon: Music, color: "#ff6b6b" },
     { text: "Queen - Bohemian Rhapsody", icon: Sparkles, color: "#4ecdc4" },
@@ -34,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   }, [autoFocus]);
 
-  // Manejar clicks fuera del componente
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -126,12 +126,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
         isTyping ? "typing" : ""
       }`}
     >
-      {/* Fondo animado con gradiente */}
+      {}
       <div className="search-background-glow" />
 
       <div className="ultra-search-bar">
         <div className="search-input-wrapper">
-          {/* Icono de búsqueda con animación */}
+          {}
           <div className="search-icon-container">
             <Search
               className={`search-icon ${isTyping ? "searching" : ""}`}
@@ -140,7 +140,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             {isTyping && <div className="search-pulse" />}
           </div>
 
-          {/* Input principal */}
+          {}
           <input
             ref={inputRef}
             type="text"
@@ -155,7 +155,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             spellCheck="false"
           />
 
-          {/* Botones de acción */}
+          {}
           <div className="action-buttons">
             {searchTerm && (
               <button
@@ -185,13 +185,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
           </div>
         </div>
 
-        {/* Barra de progreso animada */}
+        {}
         <div
           className={`search-progress ${isFocused || isTyping ? "active" : ""}`}
         />
       </div>
 
-      {/* Panel de filtros mejorado */}
+      {}
       {showFilters && filters && onFiltersChange && (
         <div className="ultra-filters-panel">
           <div className="filters-header">
@@ -263,7 +263,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </div>
       )}
 
-      {/* Sugerencias mejoradas */}
+      {}
       {showSuggestions && searchTerm === "" && (
         <div className="ultra-suggestions-panel">
           <div className="suggestions-header">

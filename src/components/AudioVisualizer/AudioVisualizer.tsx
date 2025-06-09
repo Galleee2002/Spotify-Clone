@@ -23,7 +23,7 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
           typeof audioData === "object" &&
           "frequencyData" in audioData
         ) {
-          // Usar datos reales del analizador de audio
+          
           const step = Math.floor(audioData.frequencyData.length / barCount);
           const newBars = Array(barCount)
             .fill(0)
@@ -33,7 +33,7 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
             });
           setBars(newBars.map((value) => (value / 255) * 100));
         } else {
-          // Fallback a animación simulada
+          
           setBars((prev) => prev.map(() => Math.random() * 100));
         }
       }, 100);

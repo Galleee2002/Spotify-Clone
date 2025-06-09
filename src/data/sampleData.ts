@@ -1,7 +1,7 @@
-// src/data/sampleData.ts
+
 import { Track, Playlist, Artist, Album, User } from "../types";
 
-/* ARTISTS */
+
 export const sampleArtists: Artist[] = [
   {
     id: "artist-1",
@@ -49,7 +49,7 @@ export const sampleArtists: Artist[] = [
   },
 ];
 
-/* TRACKS */
+
 export const sampleTracks: Track[] = [
   {
     id: "track-1",
@@ -102,7 +102,7 @@ export const sampleTracks: Track[] = [
   {
     id: "track-4",
     title: "Sweet Child O' Mine",
-    artist: "Guns N' Roses", // ← CORREGIDO: nombre correcto
+    artist: "Guns N' Roses", 
     album: "Appetite for Destruction",
     duration: 356,
     coverUrl:
@@ -134,7 +134,7 @@ export const sampleTracks: Track[] = [
   {
     id: "track-6",
     title: "Another Brick in the Wall",
-    artist: "Pink Floyd", // ← CORREGIDO: nombre correcto
+    artist: "Pink Floyd", 
     album: "The Wall",
     duration: 238,
     coverUrl:
@@ -149,7 +149,7 @@ export const sampleTracks: Track[] = [
   },
 ];
 
-/* USER */
+
 export const sampleUser: User = {
   id: "user-1",
   name: "Music Lover",
@@ -167,7 +167,7 @@ export const sampleUser: User = {
   recentlyPlayed: [sampleTracks[0], sampleTracks[2], sampleTracks[4]],
 };
 
-/* PLAYLISTS */
+
 export const samplePlaylists: Playlist[] = [
   {
     id: "playlist-1",
@@ -227,10 +227,10 @@ export const samplePlaylists: Playlist[] = [
   },
 ];
 
-// Asignar IDs de playlists al usuario
+
 sampleUser.playlists = samplePlaylists.map((p) => p.id);
 
-/* ALBUMS */
+
 export const sampleAlbums: Album[] = [
   {
     id: "album-1",
@@ -264,7 +264,7 @@ export const sampleAlbums: Album[] = [
   },
 ];
 
-/* POPULAR GENRES */
+
 export const popularGenres = [
   "Rock",
   "Pop",
@@ -284,7 +284,7 @@ export const popularGenres = [
   "Latin",
 ];
 
-/* DEFAULT PLAYER STATE */
+
 export const defaultPlayerState = {
   currentTrack: null,
   isPlaying: false,
@@ -300,7 +300,7 @@ export const defaultPlayerState = {
   history: [],
 };
 
-/* AUDIO DEMOS */
+
 export const defaultAudioUrls = {
   demo1: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
   demo2:

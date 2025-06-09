@@ -33,7 +33,7 @@ export const useAudio = (): UseAudioReturn => {
     frequencyData: [],
   });
 
-  // Inicializar contexto de audio para visualizador
+  
   const initializeAudioContext = useCallback(() => {
     if (!audioRef.current || audioContextRef.current) return;
 
@@ -54,7 +54,7 @@ export const useAudio = (): UseAudioReturn => {
     }
   }, []);
 
-  // Actualizar datos del visualizador
+  
   const updateVisualizerData = useCallback(() => {
     if (!analyserRef.current) return;
 
@@ -64,7 +64,7 @@ export const useAudio = (): UseAudioReturn => {
     analyserRef.current.getByteFrequencyData(frequencyData);
     analyserRef.current.getByteTimeDomainData(timeData);
 
-    // Calcular métricas adicionales
+    
     const frequencyArray = Array.from(frequencyData);
     const volume =
       frequencyArray.reduce((sum, value) => sum + value, 0) /
@@ -85,7 +85,7 @@ export const useAudio = (): UseAudioReturn => {
     }));
   }, []);
 
-  // Función para cargar un track
+  
   const loadTrack = useCallback((track: Track) => {
     if (!audioRef.current) return;
 
@@ -103,7 +103,7 @@ export const useAudio = (): UseAudioReturn => {
     audioRef.current.load();
   }, []);
 
-  // Controles del reproductor
+  
   const play = useCallback(async () => {
     if (!audioRef.current || !playerState.currentTrack) return;
 
@@ -212,7 +212,7 @@ export const useAudio = (): UseAudioReturn => {
   const previous = useCallback(() => {
     setPlayerState((prev) => {
       if (prev.currentTime > 3 && audioRef.current) {
-        // Si estamos a más de 3 segundos, reiniciar la canción actual
+        
         audioRef.current.currentTime = 0;
         return { ...prev, currentTime: 0 };
       }
@@ -259,7 +259,7 @@ export const useAudio = (): UseAudioReturn => {
     removeFromQueue,
   };
 
-  // Event listeners
+  
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -328,7 +328,7 @@ export const useAudio = (): UseAudioReturn => {
     };
   }, [next]);
 
-  // Actualizar visualizador cuando esté reproduciendo
+  
   useEffect(() => {
     let animationFrame: number;
 
@@ -347,7 +347,7 @@ export const useAudio = (): UseAudioReturn => {
     };
   }, [playerState.isPlaying, updateVisualizerData]);
 
-  // Cleanup
+  
   useEffect(() => {
     return () => {
       if (audioContextRef.current) {
