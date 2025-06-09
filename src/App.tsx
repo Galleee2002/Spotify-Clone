@@ -3,14 +3,12 @@ import Sidebar from "./components/Sidebar";
 import SearchBar from "./components/SearchBar";
 import TrackList from "./components/Tracklist";
 import Player from "./components/Player";
-import AudioVisualizer from "./components/AudioVisualizer";
 import { useAudio } from "./hooks/useAudio";
-import { samplePlaylists, sampleTracks, sampleUser } from "./data/sampleData";
+import { samplePlaylists, sampleUser } from "./data/sampleData";
 import { Playlist, Track, SearchFilters } from "./types";
 import "./App.css";
 
 const App: React.FC = () => {
-  
   const [activePlaylist, setActivePlaylist] = useState<string | null>(
     "playlist-1"
   );
@@ -24,10 +22,8 @@ const App: React.FC = () => {
     year: undefined,
   });
 
-  
-  const { audioRef, playerState, controls, visualizerData } = useAudio();
+  const { audioRef, playerState, controls } = useAudio();
 
-  
   const currentPlaylist = activePlaylist
     ? playlists.find((p) => p.id === activePlaylist)
     : null;
@@ -39,10 +35,8 @@ const App: React.FC = () => {
         track.album.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
 
-  
   useEffect(() => {
     if (currentPlaylist && currentPlaylist.tracks.length > 0) {
-      
       currentPlaylist.tracks.forEach((track) => {
         if (
           !playerState.queue.find((qTrack: Track) => qTrack.id === track.id)
@@ -53,25 +47,18 @@ const App: React.FC = () => {
     }
   }, [activePlaylist, currentPlaylist, controls, playerState.queue]);
 
-  
   const handlePlaylistSelect = (playlistId: string) => {
     setActivePlaylist(playlistId);
   };
 
   const handleTrackSelect = (track: Track) => {
-    
     if (!playerState.currentTrack || playerState.currentTrack.id !== track.id) {
-      
       if (audioRef.current) {
         audioRef.current.src = track.audioUrl;
         audioRef.current.load();
       }
-
-      
-      
     }
 
-    
     if (playerState.isPlaying) {
       controls.pause();
     } else {
