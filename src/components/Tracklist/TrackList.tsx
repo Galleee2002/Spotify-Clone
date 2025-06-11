@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { TrackListProps } from "../../types";
 import { Heart, MoreHorizontal, Play } from "lucide-react";
 import "./TrackList.css";
@@ -13,11 +13,47 @@ const TrackList: React.FC<TrackListProps> = ({
   showDuration = true,
   showActions = true,
 }) => {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [animatingLikes, setAnimatingLikes] = useState<Set<string>>(new Set());
+  const menuRef = useRef<HTMLDivElement>(null);
+
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
+
+  const handleLike = (trackId: string) => {
+    onTrackLike(trackId);
+    setAnimatingLikes((prev) => new Set(prev).add(trackId));
+    setTimeout(() => {
+      setAnimatingLikes((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(trackId);
+        return newSet;
+      });
+    }, 600);
+  };
+
+  const toggleMenu = (trackId: string) => {
+    setOpenMenuId(openMenuId === trackId ? null : trackId);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenuId(null);
+      }
+    };
+
+    if (openMenuId) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenuId]);
 
   return (
     <div className="track-list">
@@ -68,14 +104,36 @@ const TrackList: React.FC<TrackListProps> = ({
           {showActions && (
             <div className="track-actions">
               <button
-                className={`like-button ${track.isLiked ? "liked" : ""}`}
-                onClick={() => onTrackLike(track.id)}
+                className={`like-button ${track.isLiked ? "liked" : ""} ${
+                  animatingLikes.has(track.id) ? "animating" : ""
+                }`}
+                onClick={() => handleLike(track.id)}
               >
-                <Heart size={16} />
+                <Heart
+                  size={16}
+                  fill={
+                    track.isLiked || animatingLikes.has(track.id)
+                      ? "#ff1744"
+                      : "none"
+                  }
+                />
               </button>
-              <button className="more-button">
-                <MoreHorizontal size={16} />
-              </button>
+              <div className="more-menu-container" ref={menuRef}>
+                <button
+                  className="more-button"
+                  onClick={() => toggleMenu(track.id)}
+                >
+                  <MoreHorizontal size={16} />
+                </button>
+                {openMenuId === track.id && (
+                  <div className="dropdown-menu">
+                    <button className="menu-item">Añadir a playlist</button>
+                    <button className="menu-item">Ir al álbum</button>
+                    <button className="menu-item">Compartir</button>
+                    <button className="menu-item">Descargar</button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

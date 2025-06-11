@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar";
 import SearchBar from "./components/SearchBar";
 import TrackList from "./components/Tracklist";
 import Player from "./components/Player";
+import UserProfile from "./components/UserProfile/UserProfile";
 import { useAudio } from "./hooks/useAudio";
 import { samplePlaylists, sampleUser } from "./data/sampleData";
 import { Playlist, Track, SearchFilters } from "./types";
@@ -14,8 +15,7 @@ const App: React.FC = () => {
   );
   const [searchTerm, setSearchTerm] = useState("");
   const [playlists] = useState<Playlist[]>(samplePlaylists);
-
-  // Estado para filtros
+  const [showProfile, setShowProfile] = useState(false);
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     type: "all",
     explicit: true,
@@ -34,6 +34,22 @@ const App: React.FC = () => {
         track.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
         track.album.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
+
+  const userProfileData = {
+    id: sampleUser.id,
+    displayName: sampleUser.displayName || sampleUser.name || "Usuario",
+    avatarUrl: sampleUser.avatarUrl,
+    email: sampleUser.email,
+    followers: sampleUser.followers || 0,
+    following: sampleUser.following || 0,
+    playlistsCount: Array.isArray(sampleUser.playlists)
+      ? sampleUser.playlists.length
+      : playlists.length,
+    totalListenTime: 247,
+  };
+
+  const recentTracks = currentPlaylist?.tracks.slice(0, 5) || [];
+  const topTracks = currentPlaylist?.tracks.slice().reverse().slice(0, 5) || [];
 
   useEffect(() => {
     if (currentPlaylist && currentPlaylist.tracks.length > 0) {
@@ -70,19 +86,25 @@ const App: React.FC = () => {
     console.log("Toggle like for track:", trackId);
   };
 
+  const handleShowProfile = () => {
+    setShowProfile(true);
+  };
+
+  const handleCloseProfile = () => {
+    setShowProfile(false);
+  };
+
   return (
     <div className="app">
-      {}
       <Sidebar
         playlists={playlists}
         activePlaylist={activePlaylist}
         onPlaylistSelect={handlePlaylistSelect}
         user={sampleUser}
+        onShowProfile={handleShowProfile}
       />
 
-      {}
       <main className="main-content">
-        {}
         <div className="main-header">
           <SearchBar
             searchTerm={searchTerm}
@@ -93,10 +115,8 @@ const App: React.FC = () => {
           />
         </div>
 
-        {}
         {currentPlaylist && (
           <div className="playlist-view">
-            {}
             <div className="playlist-header">
               <img
                 src={currentPlaylist.coverUrl}
@@ -110,7 +130,6 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {}
             <TrackList
               tracks={filteredTracks}
               currentTrack={playerState.currentTrack}
@@ -120,7 +139,6 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {}
         {!currentPlaylist && (
           <div className="empty-state">
             <h2>Selecciona una playlist</h2>
@@ -131,10 +149,17 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {}
       <Player playerState={playerState} controls={controls} />
 
-      {}
+      {showProfile && (
+        <UserProfile
+          user={userProfileData}
+          recentTracks={recentTracks}
+          topTracks={topTracks}
+          onClose={handleCloseProfile}
+        />
+      )}
+
       <audio ref={audioRef} preload="metadata" crossOrigin="anonymous" />
     </div>
   );

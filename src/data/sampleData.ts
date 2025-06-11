@@ -1,6 +1,4 @@
-
 import { Track, Playlist, Artist, Album, User } from "../types";
-
 
 export const sampleArtists: Artist[] = [
   {
@@ -48,7 +46,6 @@ export const sampleArtists: Artist[] = [
     topTracks: [],
   },
 ];
-
 
 export const sampleTracks: Track[] = [
   {
@@ -102,11 +99,11 @@ export const sampleTracks: Track[] = [
   {
     id: "track-4",
     title: "Sweet Child O' Mine",
-    artist: "Guns N' Roses", 
+    artist: "Guns N' Roses",
     album: "Appetite for Destruction",
     duration: 356,
     coverUrl:
-      "https://images.unsplash.com/photo-1571974599782-87624638275c?w=300&h=300&fit=crop",
+      "https://imgs.search.brave.com/QfIGZgwRIdTrFkRABtxSuW2_saAogQqOuPSHN9RIxYQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWdz/LnNlYXJjaC5icmF2/ZS5jb20vQ0NFdG5X/dXdqbUp4TXgyM0Iz/X1ozRTEzSDVKaTZQ/WUUweUk1Q3JBY205/MC9yczpmaXQ6NTYw/OjMyMDoxOjAvZzpj/ZS9hSFIwY0hNNkx5/OXpkR0YwL2FXTXVk/MmxyYVdFdWJtOWov/YjI5cmFXVXVibVYw/TDJkMS9ibk51Wm01/eWIzTmxjeTlwL2JX/Rm5aWE12WVM5aE5T/OUgvZFc1emJuSXRj/M2RsWlhSai9MbXB3/Wnk5eVpYWnBjMmx2/L2JpOXNZWFJsYzNR/dmMyTmgvYkdVdGRH/OHRkMmxrZEdndC9a/RzkzYmk4eU1EQV9Z/Mkk5L01qQXhNVEEy/TWpFd01USTAvTVRZ.jpeg",
     audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
     liked: false,
     explicit: false,
@@ -134,7 +131,7 @@ export const sampleTracks: Track[] = [
   {
     id: "track-6",
     title: "Another Brick in the Wall",
-    artist: "Pink Floyd", 
+    artist: "Pink Floyd",
     album: "The Wall",
     duration: 238,
     coverUrl:
@@ -148,7 +145,6 @@ export const sampleTracks: Track[] = [
     preview: "https://p.scdn.co/mp3-preview/sample6",
   },
 ];
-
 
 export const sampleUser: User = {
   id: "user-1",
@@ -166,7 +162,6 @@ export const sampleUser: User = {
   likedTracks: sampleTracks.filter((track) => track.liked),
   recentlyPlayed: [sampleTracks[0], sampleTracks[2], sampleTracks[4]],
 };
-
 
 export const samplePlaylists: Playlist[] = [
   {
@@ -227,9 +222,7 @@ export const samplePlaylists: Playlist[] = [
   },
 ];
 
-
 sampleUser.playlists = samplePlaylists.map((p) => p.id);
-
 
 export const sampleAlbums: Album[] = [
   {
@@ -264,7 +257,6 @@ export const sampleAlbums: Album[] = [
   },
 ];
 
-
 export const popularGenres = [
   "Rock",
   "Pop",
@@ -284,7 +276,6 @@ export const popularGenres = [
   "Latin",
 ];
 
-
 export const defaultPlayerState = {
   currentTrack: null,
   isPlaying: false,
@@ -299,7 +290,6 @@ export const defaultPlayerState = {
   queue: [],
   history: [],
 };
-
 
 export const defaultAudioUrls = {
   demo1: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
