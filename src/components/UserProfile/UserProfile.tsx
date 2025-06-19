@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, Edit3, Music, Heart, Clock, Users } from "lucide-react";
+import { Edit3, Music, Heart, Clock, Users } from "lucide-react";
 import "./UserProfile.css";
 
 interface Track {
