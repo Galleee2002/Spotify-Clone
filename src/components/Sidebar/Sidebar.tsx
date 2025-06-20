@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SidebarProps } from "../../types";
+import { X } from "lucide-react";
 import "./Sidebar.css";
 
 interface SidebarWithProfileProps extends SidebarProps {
   onShowProfile?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
 const Sidebar: React.FC<SidebarWithProfileProps> = ({
@@ -14,6 +18,9 @@ const Sidebar: React.FC<SidebarWithProfileProps> = ({
   isCollapsed = false,
   onToggleCollapse,
   onShowProfile,
+  isOpen = false,
+  onClose,
+  isMobile = false,
 }) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -25,6 +32,16 @@ const Sidebar: React.FC<SidebarWithProfileProps> = ({
   const handleProfileClick = () => {
     setUserMenuOpen(false);
     onShowProfile?.();
+  };
+
+  const handlePlaylistClick = (playlistId: string) => {
+    onPlaylistSelect(playlistId);
+    setUserMenuOpen(false);
+  };
+
+  const handleClose = () => {
+    setUserMenuOpen(false);
+    onClose?.();
   };
 
   useEffect(() => {
@@ -47,13 +64,23 @@ const Sidebar: React.FC<SidebarWithProfileProps> = ({
   }, [userMenuOpen]);
 
   return (
-    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+    <div
+      className={`sidebar ${isCollapsed ? "collapsed" : ""} ${
+        isOpen ? "open" : ""
+      }`}
+    >
       <div className="sidebar-header">
         <h1 className="logo">Spotify Clone</h1>
-        {onToggleCollapse && (
-          <button onClick={onToggleCollapse} className="collapse-button">
-            ☰
+        {isMobile ? (
+          <button onClick={handleClose} className="collapse-button">
+            <X size={20} />
           </button>
+        ) : (
+          onToggleCollapse && (
+            <button onClick={onToggleCollapse} className="collapse-button">
+              ☰
+            </button>
+          )
         )}
       </div>
 
@@ -66,7 +93,7 @@ const Sidebar: React.FC<SidebarWithProfileProps> = ({
               className={`nav-item ${
                 activePlaylist === playlist.id ? "active" : ""
               }`}
-              onClick={() => onPlaylistSelect(playlist.id)}
+              onClick={() => handlePlaylistClick(playlist.id)}
             >
               <img
                 src={playlist.coverUrl}

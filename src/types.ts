@@ -1,20 +1,16 @@
-
-
-
-
 export interface Track {
   id: string;
   title: string;
   artist: string;
   album: string;
-  duration: number; 
+  duration: number;
   audioUrl: string;
   coverUrl: string;
   isLiked?: boolean;
-  liked?: boolean; 
+  liked?: boolean;
   explicit?: boolean;
   year?: number;
-  genre?: string | string[]; 
+  genre?: string | string[];
   popularity?: number;
   releaseDate?: string;
   preview?: string;
@@ -54,8 +50,8 @@ export interface Playlist {
   tracks: Track[];
   createdBy: string;
   isPublic: boolean;
-  createdAt: Date | string; 
-  updatedAt: Date | string; 
+  createdAt: Date | string;
+  updatedAt: Date | string;
   owner?: User;
   followers?: number;
 }
@@ -66,8 +62,7 @@ export interface User {
   email: string;
   avatarUrl: string;
   isPremium: boolean;
-  playlists: string[] | Playlist[]; 
-  
+  playlists: string[] | Playlist[];
   username?: string;
   displayName?: string;
   followers?: number;
@@ -76,8 +71,6 @@ export interface User {
   likedTracks?: Track[];
   recentlyPlayed?: Track[];
 }
-
-
 
 export interface SearchFilters {
   type: "all" | "track" | "artist" | "album" | "playlist";
@@ -98,8 +91,6 @@ export interface SearchBarProps {
   filters?: SearchFilters;
   onFiltersChange?: (filters: SearchFilters) => void;
 }
-
-
 
 export interface PlayerState {
   currentTrack: Track | null;
@@ -127,13 +118,11 @@ export interface PlayerControls {
   toggleMute: () => void;
   toggleShuffle: () => void;
   setRepeatMode?: (mode: "off" | "one" | "all") => void;
-  toggleRepeat?: () => void; 
+  toggleRepeat?: () => void;
   addToQueue: (track: Track) => void;
   removeFromQueue: (trackId: string) => void;
   clearQueue?: () => void;
 }
-
-
 
 export interface VisualizerData {
   frequencyData: number[];
@@ -144,23 +133,22 @@ export interface AudioVisualizerProps {
   audioData?: number[] | VisualizerData;
   isPlaying: boolean;
   className?: string;
-  
   barCount?: number;
   height?: number;
   color?: string;
   responsive?: boolean;
 }
 
-
-
 export interface SidebarProps {
   playlists: Playlist[];
   activePlaylist: string | null;
   onPlaylistSelect: (playlistId: string) => void;
   user: User;
-  
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
 export interface TrackListProps {
@@ -169,7 +157,6 @@ export interface TrackListProps {
   onTrackSelect: (track: Track) => void;
   onTrackLike: (trackId: string) => void;
   isLoading?: boolean;
-  
   showHeader?: boolean;
   showAlbum?: boolean;
   showDuration?: boolean;
@@ -179,12 +166,9 @@ export interface TrackListProps {
 export interface PlayerProps {
   playerState: PlayerState;
   controls: PlayerControls;
-  
   className?: string;
   compact?: boolean;
 }
-
-
 
 export interface UseAudioReturn {
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -192,8 +176,6 @@ export interface UseAudioReturn {
   controls: PlayerControls;
   visualizerData: number[] | VisualizerData;
 }
-
-
 
 export interface ApiResponse<T> {
   data: T;
@@ -209,8 +191,6 @@ export interface SearchResponse {
   hasMore: boolean;
 }
 
-
-
 export interface TrackEvent {
   type: "play" | "pause" | "like" | "share" | "add_to_playlist";
   trackId: string;
@@ -223,8 +203,6 @@ export interface PlaylistEvent {
   timestamp: Date;
 }
 
-
-
 export type RepeatMode = "off" | "one" | "all";
 export type SearchType = "all" | "track" | "artist" | "album" | "playlist";
 export type PlayerEventType =
@@ -234,8 +212,6 @@ export type PlayerEventType =
   | "next"
   | "previous"
   | "seek";
-
-
 
 export const SEARCH_TYPES = [
   "all",

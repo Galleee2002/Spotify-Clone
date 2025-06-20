@@ -7,6 +7,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import { useAudio } from "./hooks/useAudio";
 import { samplePlaylists, sampleUser } from "./data/sampleData";
 import { Playlist, Track, SearchFilters } from "./types";
+import { Menu } from "lucide-react";
 import "./App.css";
 
 const App: React.FC = () => {
@@ -16,6 +17,8 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [playlists] = useState<Playlist[]>(samplePlaylists);
   const [showProfile, setShowProfile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     type: "all",
     explicit: true,
@@ -52,6 +55,19 @@ const App: React.FC = () => {
   const topTracks = currentPlaylist?.tracks.slice().reverse().slice(0, 5) || [];
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setSidebarOpen(false);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
     if (currentPlaylist && currentPlaylist.tracks.length > 0) {
       currentPlaylist.tracks.forEach((track) => {
         if (
@@ -65,6 +81,9 @@ const App: React.FC = () => {
 
   const handlePlaylistSelect = (playlistId: string) => {
     setActivePlaylist(playlistId);
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
   };
 
   const handleTrackSelect = (track: Track) => {
@@ -88,24 +107,47 @@ const App: React.FC = () => {
 
   const handleShowProfile = () => {
     setShowProfile(true);
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
   };
 
   const handleCloseProfile = () => {
     setShowProfile(false);
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="app">
+      {isMobile && sidebarOpen && (
+        <div className="sidebar-overlay active" onClick={closeSidebar} />
+      )}
+
       <Sidebar
         playlists={playlists}
         activePlaylist={activePlaylist}
         onPlaylistSelect={handlePlaylistSelect}
         user={sampleUser}
         onShowProfile={handleShowProfile}
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+        isMobile={isMobile}
       />
 
       <main className="main-content">
         <div className="main-header">
+          {isMobile && (
+            <button className="mobile-menu-button" onClick={toggleSidebar}>
+              <Menu size={24} />
+            </button>
+          )}
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}

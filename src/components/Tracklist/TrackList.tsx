@@ -80,7 +80,7 @@ const TrackList: React.FC<TrackListProps> = ({
               className="play-track-button"
               onClick={() => onTrackSelect(track)}
             >
-              <Play size={16} />
+              <Play size={14} />
             </button>
           </div>
 
@@ -104,15 +104,15 @@ const TrackList: React.FC<TrackListProps> = ({
           {showActions && (
             <div className="track-actions">
               <button
-                className={`like-button ${track.isLiked ? "liked" : ""} ${
-                  animatingLikes.has(track.id) ? "animating" : ""
-                }`}
+                className={`like-button ${
+                  track.isLiked || track.liked ? "liked" : ""
+                } ${animatingLikes.has(track.id) ? "animating" : ""}`}
                 onClick={() => handleLike(track.id)}
               >
                 <Heart
                   size={16}
                   fill={
-                    track.isLiked || animatingLikes.has(track.id)
+                    track.isLiked || track.liked || animatingLikes.has(track.id)
                       ? "#ff1744"
                       : "none"
                   }

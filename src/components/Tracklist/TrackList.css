@@ -1,10 +1,11 @@
 .track-list {
   width: 100%;
+  background: transparent;
 }
 
 .track-list-header {
   display: grid;
-  grid-template-columns: 60px 1fr 200px 80px 100px;
+  grid-template-columns: 40px 1fr 200px 80px 80px;
   gap: 1rem;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -13,20 +14,21 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: rgba(18, 18, 18, 0.95);
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  margin-bottom: 0.5rem;
 }
 
 .track-item {
   display: grid;
-  grid-template-columns: 60px 1fr 200px 80px 100px;
+  grid-template-columns: 40px 1fr 200px 80px 80px;
   gap: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
   align-items: center;
-  min-height: 64px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-height: 56px;
+  position: relative;
+  background: transparent;
 }
 
 .track-item:hover {
@@ -35,7 +37,10 @@
 
 .track-item.playing {
   background: rgba(29, 185, 84, 0.1);
-  border-left: 3px solid #1db954;
+}
+
+.track-item.playing .track-title {
+  color: #1db954;
 }
 
 .track-number-container {
@@ -43,33 +48,32 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
 }
 
 .track-number {
   color: #b3b3b3;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
 }
 
 .play-track-button {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(29, 185, 84, 0.9);
+  background: none;
   border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 4px;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  opacity: 0;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
 }
 
 .track-item:hover .track-number {
@@ -80,22 +84,22 @@
   opacity: 1;
 }
 
-.track-item.playing .track-number {
-  color: #1db954;
+.play-track-button:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .track-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  cursor: pointer;
+  gap: 0.75rem;
   min-width: 0;
+  flex: 1;
 }
 
 .track-cover {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -107,29 +111,29 @@
 
 .track-title {
   color: #ffffff;
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0 0 2px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.track-item.playing .track-title {
-  color: #1db954;
+  line-height: 1.2;
 }
 
 .track-artist {
   color: #b3b3b3;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .track-album {
   color: #b3b3b3;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -137,63 +141,55 @@
 
 .track-duration {
   color: #b3b3b3;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 400;
   text-align: right;
 }
 
 .track-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.like-button {
+.track-item:hover .track-actions {
+  opacity: 1;
+}
+
+.like-button,
+.more-button {
   background: none;
   border: none;
   color: #b3b3b3;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 6px;
   border-radius: 50%;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
 
-.like-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.like-button:hover,
+.more-button:hover {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .like-button.liked {
   color: #ff1744;
 }
 
+.like-button.animating {
+  animation: heartPulse 0.6s ease;
+}
+
 .more-menu-container {
   position: relative;
-}
-
-.more-button {
-  background: none;
-  border: none;
-  color: #b3b3b3;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.more-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
 }
 
 .dropdown-menu {
@@ -201,12 +197,12 @@
   top: 100%;
   right: 0;
   background: #282828;
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   z-index: 1000;
-  min-width: 200px;
+  min-width: 160px;
 }
 
 .menu-item {
@@ -216,173 +212,254 @@
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: background 0.2s ease;
 }
 
 .menu-item:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-@media screen and (max-width: 768px) {
-  .track-list-header,
-  .track-item {
-    grid-template-columns: 50px 1fr 60px !important;
-    gap: 0.75rem !important;
+@keyframes heartPulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .track-list-header {
-    padding: 0.75rem !important;
-    font-size: 0.75rem !important;
+  50% {
+    transform: scale(1.3);
   }
-  
-  .track-item {
-    padding: 0.75rem !important;
-    min-height: 72px !important;
-  }
-  
-  .track-album {
-    display: none !important;
-  }
-  
-  .track-duration {
-    font-size: 0.8rem !important;
-  }
-  
-  .track-cover {
-    width: 44px !important;
-    height: 44px !important;
-  }
-  
-  .track-title {
-    font-size: 0.9rem !important;
-  }
-  
-  .track-artist {
-    font-size: 0.8rem !important;
-  }
-  
-  .more-button,
-  .like-button {
-    width: 40px !important;
-    height: 40px !important;
+  100% {
+    transform: scale(1);
   }
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 1024px) {
   .track-list-header,
   .track-item {
-    grid-template-columns: 40px 1fr 80px !important;
-    gap: 0.5rem !important;
+    grid-template-columns: 35px 1fr 150px 70px 70px;
+    gap: 0.75rem;
   }
-  
-  .track-list-header {
-    padding: 0.5rem !important;
-    font-size: 0.7rem !important;
-  }
-  
+
   .track-item {
-    padding: 0.75rem 0.5rem !important;
-    min-height: 76px !important;
+    padding: 0.5rem 0.75rem;
+    min-height: 52px;
   }
-  
-  .track-number-container {
-    width: 32px !important;
-    height: 32px !important;
+
+  .track-cover {
+    width: 36px;
+    height: 36px;
   }
-  
-  .track-number {
-    font-size: 0.75rem !important;
+
+  .track-title {
+    font-size: 0.9rem;
   }
-  
-  .play-track-button {
-    width: 28px !important;
-    height: 28px !important;
+
+  .track-artist,
+  .track-album,
+  .track-duration {
+    font-size: 0.8rem;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .track-list-header,
+  .track-item {
+    grid-template-columns: 30px 1fr 60px;
+    gap: 0.75rem;
+  }
+
+  .track-list-header .track-album,
+  .track-item .track-album {
+    display: none;
+  }
+
+  .track-list-header .track-actions {
+    display: none;
+  }
+
+  .track-item {
+    padding: 0.75rem 1rem;
+    min-height: 64px;
+  }
+
   .track-info {
-    gap: 0.75rem !important;
+    gap: 0.75rem;
   }
-  
+
   .track-cover {
-    width: 40px !important;
-    height: 40px !important;
+    width: 48px;
+    height: 48px;
   }
-  
-  .track-title {
-    font-size: 0.85rem !important;
-    margin-bottom: 0.125rem !important;
-  }
-  
-  .track-artist {
-    font-size: 0.75rem !important;
-  }
-  
-  .track-duration {
-    font-size: 0.75rem !important;
-  }
-  
+
   .track-actions {
-    flex-direction: column !important;
-    gap: 0.125rem !important;
+    opacity: 1;
+    gap: 0.25rem;
   }
-  
-  .more-button,
-  .like-button {
-    width: 44px !important;
-    height: 44px !important;
+
+  .like-button,
+  .more-button {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
   }
-  
-  .dropdown-menu {
-    right: -1rem !important;
-    min-width: 160px !important;
+
+  .track-number-container {
+    width: 28px;
+    height: 28px;
   }
-  
-  .menu-item {
-    padding: 1rem !important;
-    font-size: 0.8rem !important;
+
+  .play-track-button {
+    width: 28px;
+    height: 28px;
   }
 }
 
-@media screen and (max-width: 360px) {
-  .track-list-header,
+@media (max-width: 480px) {
   .track-item {
-    grid-template-columns: 35px 1fr 70px !important;
-    gap: 0.375rem !important;
+    padding: 0.5rem 0.75rem;
+    min-height: 60px;
+    grid-template-columns: 25px 1fr 50px;
+    gap: 0.5rem;
   }
-  
+
   .track-list-header {
-    padding: 0.375rem !important;
-    font-size: 0.65rem !important;
+    padding: 0.5rem 0.75rem;
+    grid-template-columns: 25px 1fr 50px;
+    gap: 0.5rem;
   }
-  
-  .track-item {
-    padding: 0.625rem 0.375rem !important;
+
+  .track-info {
+    gap: 0.5rem;
   }
-  
+
   .track-cover {
-    width: 36px !important;
-    height: 36px !important;
+    width: 44px;
+    height: 44px;
   }
-  
+
   .track-title {
-    font-size: 0.8rem !important;
+    font-size: 0.85rem;
+    margin-bottom: 1px;
   }
-  
+
   .track-artist {
-    font-size: 0.7rem !important;
+    font-size: 0.75rem;
   }
-  
+
   .track-duration {
-    font-size: 0.7rem !important;
+    font-size: 0.75rem;
   }
-  
-  .more-button,
-  .like-button {
-    width: 40px !important;
-    height: 40px !important;
+
+  .like-button,
+  .more-button {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+
+  .track-number-container {
+    width: 24px;
+    height: 24px;
+  }
+
+  .play-track-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .track-number {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .track-item {
+    padding: 0.5rem;
+    min-height: 56px;
+  }
+
+  .track-list-header {
+    padding: 0.5rem;
+  }
+
+  .track-cover {
+    width: 40px;
+    height: 40px;
+  }
+
+  .track-title {
+    font-size: 0.8rem;
+  }
+
+  .track-artist {
+    font-size: 0.7rem;
+  }
+
+  .track-duration {
+    font-size: 0.7rem;
+  }
+
+  .like-button,
+  .more-button {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .track-item {
+    min-height: 48px;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .track-list-header {
+    padding: 0.25rem 0.75rem;
+  }
+
+  .track-cover {
+    width: 32px;
+    height: 32px;
+  }
+
+  .track-title {
+    font-size: 0.85rem;
+  }
+
+  .track-artist {
+    font-size: 0.75rem;
+  }
+
+  .like-button,
+  .more-button {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .track-item {
+    -webkit-tap-highlight-color: rgba(29, 185, 84, 0.1);
+  }
+
+  .track-actions {
+    opacity: 1;
+  }
+
+  .track-number {
+    opacity: 1;
+  }
+
+  .play-track-button {
+    opacity: 0;
+  }
+
+  .track-item:active .track-number {
+    opacity: 0;
+  }
+
+  .track-item:active .play-track-button {
+    opacity: 1;
   }
 }
