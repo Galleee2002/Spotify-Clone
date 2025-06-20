@@ -92,7 +92,7 @@
   border: none;
   outline: none;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 400;
   min-height: 24px;
   width: 100%;
@@ -102,6 +102,7 @@
 .ultra-search-input::placeholder {
   color: #b3b3b3;
   transition: all 0.3s ease;
+  font-size: 16px;
 }
 
 .ultra-search-container.focused .ultra-search-input::placeholder {
@@ -513,11 +514,11 @@
   }
 
   .ultra-search-input {
-    font-size: 0.9rem;
+    font-size: 16px;
   }
 
   .ultra-search-input::placeholder {
-    font-size: 0.85rem;
+    font-size: 16px;
   }
 
   .action-buttons {
@@ -590,11 +591,11 @@
   }
 
   .ultra-search-input {
-    font-size: 0.85rem;
+    font-size: 16px;
   }
 
   .ultra-search-input::placeholder {
-    font-size: 0.8rem;
+    font-size: 16px;
   }
 
   .action-btn {
