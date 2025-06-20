@@ -15,7 +15,14 @@ const TrackList: React.FC<TrackListProps> = ({
 }) => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [animatingLikes, setAnimatingLikes] = useState<Set<string>>(new Set());
+  const [menuPosition, setMenuPosition] = useState<{
+    top: number;
+    right: number;
+  } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const moreButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>(
+    {}
+  );
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -36,13 +43,46 @@ const TrackList: React.FC<TrackListProps> = ({
   };
 
   const toggleMenu = (trackId: string) => {
-    setOpenMenuId(openMenuId === trackId ? null : trackId);
+    if (openMenuId === trackId) {
+      setOpenMenuId(null);
+      setMenuPosition(null);
+    } else {
+      const isMobile = window.innerWidth <= 480;
+
+      if (isMobile) {
+        const button = moreButtonRefs.current[trackId];
+        if (button) {
+          const rect = button.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const menuHeight = 240;
+
+          let top = rect.bottom + 8;
+          if (top + menuHeight > viewportHeight - 20) {
+            top = rect.top - menuHeight - 8;
+          }
+
+          setMenuPosition({
+            top: Math.max(20, Math.min(top, viewportHeight - menuHeight - 20)),
+            right: 16,
+          });
+        }
+      }
+
+      setOpenMenuId(trackId);
+    }
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOpenMenuId(null);
+        const clickedButton = Object.values(moreButtonRefs.current).find(
+          (button) => button && button.contains(event.target as Node)
+        );
+
+        if (!clickedButton) {
+          setOpenMenuId(null);
+          setMenuPosition(null);
+        }
       }
     };
 
@@ -53,6 +93,18 @@ const TrackList: React.FC<TrackListProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [openMenuId]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (openMenuId) {
+        setOpenMenuId(null);
+        setMenuPosition(null);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [openMenuId]);
 
   return (
@@ -118,26 +170,43 @@ const TrackList: React.FC<TrackListProps> = ({
                   }
                 />
               </button>
-              <div className="more-menu-container" ref={menuRef}>
+              <div className="more-menu-container">
                 <button
+                  ref={(el) => {
+                    moreButtonRefs.current[track.id] = el;
+                  }}
                   className="more-button"
                   onClick={() => toggleMenu(track.id)}
                 >
                   <MoreHorizontal size={16} />
                 </button>
-                {openMenuId === track.id && (
-                  <div className="dropdown-menu">
-                    <button className="menu-item">Añadir a playlist</button>
-                    <button className="menu-item">Ir al álbum</button>
-                    <button className="menu-item">Compartir</button>
-                    <button className="menu-item">Descargar</button>
-                  </div>
-                )}
               </div>
             </div>
           )}
         </div>
       ))}
+
+      {openMenuId && (
+        <div
+          ref={menuRef}
+          className="dropdown-menu"
+          style={
+            menuPosition
+              ? {
+                  position: "fixed",
+                  top: `${menuPosition.top}px`,
+                  right: `${menuPosition.right}px`,
+                  left: "auto",
+                }
+              : {}
+          }
+        >
+          <button className="menu-item">Añadir a playlist</button>
+          <button className="menu-item">Ir al álbum</button>
+          <button className="menu-item">Compartir</button>
+          <button className="menu-item">Descargar</button>
+        </div>
+      )}
     </div>
   );
 };

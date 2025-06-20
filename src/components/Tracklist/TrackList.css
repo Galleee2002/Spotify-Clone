@@ -203,6 +203,7 @@
   overflow: hidden;
   z-index: 1000;
   min-width: 160px;
+  white-space: nowrap;
 }
 
 .menu-item {
@@ -262,6 +263,17 @@
   }
 }
 
+@keyframes slideUpMenu {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .track-list-header,
   .track-item {
@@ -312,6 +324,20 @@
   .play-track-button {
     width: 28px;
     height: 28px;
+  }
+
+  .dropdown-menu {
+    right: -20px;
+    top: calc(100% + 8px);
+    min-width: 180px;
+    backdrop-filter: blur(10px);
+    background: rgba(40, 40, 40, 0.95);
+  }
+
+  .menu-item {
+    padding: 1rem;
+    min-height: 48px;
+    font-size: 0.9rem;
   }
 }
 
@@ -370,6 +396,38 @@
 
   .track-number {
     font-size: 0.8rem;
+  }
+
+  .dropdown-menu {
+    position: fixed;
+    right: 1rem;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    min-width: 200px;
+    max-width: calc(100vw - 2rem);
+    background: rgba(40, 40, 40, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    animation: slideUpMenu 0.2s ease;
+    transform-origin: bottom right;
+  }
+
+  .more-menu-container {
+    position: static;
+  }
+
+  .menu-item {
+    padding: 1rem 1.25rem;
+    min-height: 52px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
   }
 }
 
